@@ -49,3 +49,12 @@ button {
 .weather-info {
     margin-top: 20px;
 }
+
+.copyright {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 12px;
+    color: white;
+}
