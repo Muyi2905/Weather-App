@@ -19,13 +19,24 @@ function fetchWeather(location) {
     const url = `${apiUrl}?q=${location}&appid=${apiKey}&units=metric`;
 
     fetch(url)
-        .then(response => response.json())
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('City not found');
+            }
+            return response.json();
+        })
         .then(data => {
             locationElement.textContent = data.name;
             temperatureElement.textContent = `${Math.round(data.main.temp)}°C`;
             descriptionElement.textContent = data.weather[0].description;
         })
         .catch(error => {
-            console.error('Error fetching weather data:', error);
+            if (error.message === 'City not found') {
+                locationElement.textContent = "Please enter an existing city";
+                temperatureElement.textContent = "";
+                descriptionElement.textContent = "";
+            } else {
+                console.error('Error fetching weather data:', error);
+            }
         });
 }
